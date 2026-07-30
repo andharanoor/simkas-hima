@@ -40,13 +40,6 @@
                 </a>
             @endif
 
-            @if (Route::has('password.request'))
-                <a class="ms-6 underline text-sm text-gray-600 hover:text-gray-900"
-                    href="{{ route('password.request') }}">
-                    Lupa password?
-                </a>
-            @endif
-
             <x-primary-button class="ms-3">
                 {{ __('Log in') }}
             </x-primary-button>

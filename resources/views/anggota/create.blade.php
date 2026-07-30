@@ -9,17 +9,25 @@
     <div class="py-6">
         <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow rounded-lg p-6">
-                <form action="{{ route('anggota.store') }}" method="POST">
+                <form action="{{ route('anggota.store') }}" 
+                      method="POST">
+                   
                     @csrf
 
-                     @if ($errors->any())
-                        <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-                            <ul class="list-disc ml-5">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
+                    @if ($errors->any())
+
+                    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg mb-5">
+                        <h3 class="font-bold mb-2">
+                            Terjadi kesalahan:
+                        </h3>
+
+                        <ul class="list-disc list-inside">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+
                     @endif
 
                     <div class="mb-6">
@@ -81,18 +89,18 @@
 
                     <div class="flex justify-end items-center gap-3 mt-8">
                         <a href="{{ route('anggota.index') }}"
-                        class="px-5 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+                            class="px-5 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
                             Kembali
                         </a>
 
                         <button type="submit"
                                 class="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                            Simpan
+                                Simpan
                         </button>
+
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
 </x-app-layout>

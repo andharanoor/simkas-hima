@@ -30,10 +30,19 @@
                     </div>
 
                     <div class="mb-6">
-                        <label class="block mb-2 font-semibold text-gray-700">Password</label>
-                        <input type="password"
-                               name="password"
-                               class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <label class="block mb-2 font-semibold text-gray-700">
+                            Password Baru
+                        </label>
+
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Kosongkan jika tidak ingin mengubah password"
+                            class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+
+                        <p class="text-sm text-gray-500 mt-1">
+                            Isi hanya jika ingin mengganti password anggota.
+                        </p>
                     </div>
 
                     <div class="mb-6">
@@ -56,6 +65,10 @@
                         <label class="block mb-2 font-semibold text-gray-700">No HP</label>
                         <input type="text"
                                name="no_hp"
+                               minlength="11"
+                               maxlength="13"
+                               pattern="[0-9]{11,13}"
+                               oninput="this.value=this.value.replace(/[^0-9]/g,'')"
                                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                                value="{{ old('no_hp', $anggota->no_hp) }}">
                     </div>

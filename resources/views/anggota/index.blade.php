@@ -13,10 +13,16 @@
                     <h3 class="text-lg font-bold">
                         Daftar Anggota
                     </h3>
+
+                    @if(auth()->user()->role == 'bendahara')
+
                     <a href="{{ route('anggota.create') }}"
                         class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                         + Tambah Anggota
                     </a>
+
+                    @endif
+
                 </div>
 
                 @if(session('success'))
@@ -25,7 +31,7 @@
                     </div>
                 @endif
 
-                <table class="min-w-full border border-gray-300">
+                <table class="min-w-full border border-gray-300 text-center">
                     <thead class="bg-gray-100">
                         <tr>
                             <th class="border px-4 py-2">No</th>
@@ -34,7 +40,7 @@
                             <th class="border px-4 py-2">Jurusan</th>
                             <th class="border px-4 py-2">No HP</th>
                             <th class="border px-4 py-2">Status</th>
-                            <th class="border px-4 py-2">Aksi</th>
+                            <th class="border px-4 py-2"> Aksi </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,16 +66,23 @@
                             <td class="border px-4 py-2">
                                 {{ $anggota->status }}
                             </td>
+
                             <td class="border px-4 py-2">
-                                <div class="flex gap-2">
+                                <div class="flex justify-center gap-3">
+                                    <a href="{{ route('anggota.show',$anggota->id) }}"
+                                        class="bg-green-500 text-white px-3 py-1 rounded">
+                                        Detail
+                                    </a>
+
+                                    @if(auth()->user()->role == 'bendahara')
 
                                     <a href="{{ route('anggota.edit', $anggota->id) }}"
-                                    class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">
+                                        class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">
                                         Edit
                                     </a>
 
                                     <form action="{{ route('anggota.destroy', $anggota->id) }}"
-                                        method="POST"
+                                        method="POST" class="inline"
                                         onsubmit="return confirm('Yakin ingin menghapus data ini?')">
 
                                         @csrf
@@ -79,8 +92,9 @@
                                                 class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">
                                             Hapus
                                         </button>
-
                                     </form>
+
+                                @endif
 
                                 </div>
                             </td>

@@ -2,26 +2,63 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Anggota;
+use App\Models\KasMasuk;
+use App\Models\KasKeluar;
+use App\Models\PembayaranKas;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
+        $totalAnggota = Anggota::count();
+        $totalKasMasuk = KasMasuk::sum('jumlah') + PembayaranKas::where('status','lunas')->sum('jumlah');
+        $totalKasKeluar = KasKeluar::sum('jumlah');
+        $saldo = $totalKasMasuk - $totalKasKeluar;
+        $sudahBayar = PembayaranKas::where('status','lunas')->count();
+        $belumBayar = PembayaranKas::where('status','belum lunas')->count();
 
-        if ($user->role == 'bendahara') {
-            return view('dashboard.bendahara');
-        }
+       $kasMasukTerbaru = KasMasuk::all()->map(function($kas){
+            return [
+                'tanggal'   => $kas->tanggal,
+                'keterangan'=> $kas->keterangan,
+                'jumlah'    => $kas->jumlah,
+                'jenis'     => 'Kas Masuk'
+            ];
+        });
 
-        if ($user->role == 'ketua') {
-            return view('dashboard.ketua');
-        }
+        $kasKeluarTerbaru = KasKeluar::all()->map(function($kas){
+            return [
+                'tanggal'   => $kas->tanggal,
+                'keterangan'=> $kas->kategori,
+                'jumlah'    => $kas->jumlah,
+                'jenis'     => 'Kas Keluar'
+            ];
+        });
 
-        if ($user->role == 'anggota') {
-            return view('dashboard.anggota');
-        }
+        $pembayaranKasTerbaru = PembayaranKas::with('anggota')->get()->map(function($kas){
+            return [
+                'tanggal'   => $kas->tanggal,
+                'keterangan'=> 'Pembayaran Kas - '.$kas->nama_anggota,
+                'jumlah'    => $kas->jumlah,
+                'jenis'     => 'Pembayaran Kas'
+            ];
+        });
 
-        abort(403);
+        $transaksiTerbaru = $kasMasukTerbaru
+            ->merge($kasKeluarTerbaru)
+            ->merge($pembayaranKasTerbaru)
+            ->sortByDesc('tanggal')
+            ->take(10);
+
+        return view('dashboard', compact(
+            'totalAnggota',
+            'totalKasMasuk',
+            'totalKasKeluar',
+            'saldo',
+            'sudahBayar',
+            'belumBayar',
+            'transaksiTerbaru'
+        ));
     }
 }

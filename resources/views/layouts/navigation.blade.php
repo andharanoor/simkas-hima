@@ -6,8 +6,10 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
+                    <img src="{{ asset('images/money.jpg') }}"
+                        alt="Logo HIMA SI"
+                        class="w-16 h-16">
+                </a>
                 </div>
 
                 <!-- Navigation Links -->
@@ -15,6 +17,30 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('anggota.index')" :active="request()->routeIs('anggota.*')">
+                        Anggota
+                    </x-nav-link>
+
+
+                    <x-nav-link :href="route('kas-masuk.index')" :active="request()->routeIs('kas-masuk.*')">
+                        Kas Masuk
+                    </x-nav-link>
+
+
+                    <x-nav-link :href="route('kas-keluar.index')" :active="request()->routeIs('kas-keluar.*')">
+                        Kas Keluar
+                    </x-nav-link>
+
+
+                    <x-nav-link :href="route('pembayaran-kas.index')" :active="request()->routeIs('pembayaran-kas.*')">
+                        Pembayaran Kas
+                    </x-nav-link>
+
+
+                    <x-nav-link :href="route('rekap.index')" :active="request()->routeIs('rekap.*')">
+                        Rekap
+                    </x-nav-link>    
                 </div>
             </div>
 

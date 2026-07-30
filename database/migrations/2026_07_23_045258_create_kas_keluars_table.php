@@ -13,17 +13,11 @@ return new class extends Migration
     {
         Schema::create('kas_keluars', function (Blueprint $table) {
             $table->id();
-
             $table->date('tanggal');
-
             $table->string('kategori');
-
             $table->integer('jumlah');
-
             $table->text('keterangan')->nullable();
-
             $table->string('bukti')->nullable();
-
             $table->foreignId('user_id')
                 ->constrained()
                 ->cascadeOnDelete();
