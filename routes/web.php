@@ -10,9 +10,7 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\RekapController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/login');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
